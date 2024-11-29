@@ -19,7 +19,7 @@ local function make_icon(item, target_quality)
 		item.icon = nil
 	end
 
-	item.localised_name = {"", "[color="..get_quality_color(target_quality).."]", {"item-name."..item.name}, " (", {"quality-name."..target_quality}, ")[/color]"}
+	item.localised_name = {"", "[color="..get_quality_color(target_quality).."]", {"?", {"item-name."..item.name}, {"entity-name."..item.name}}, " (", {"quality-name."..target_quality}, ")[/color]"}
 end
 
 local function setup_item(item_name, target_quality)
@@ -29,8 +29,8 @@ local function setup_item(item_name, target_quality)
 
 	make_icon(item, target_quality)
 
-	item.localised_description = {"", "Temporary item. It will turn into [item="..item.name.."] of quality [quality="..target_quality.."] after it's taken out of the machine."}
-	item.hidden = true
+	item.localised_description = {"qrc.temp-description", item.name, target_quality}
+	item.hidden_in_factoriopedia = true
 
 	item.spoil_ticks = 1
 	item.spoil_to_trigger_result =
@@ -56,12 +56,12 @@ local function setup_item(item_name, target_quality)
 end
 
 function qrc.edit_quality_recipe(recipe)
+	local _, target_quality, recipe_name = recipe.name:match("(.+)%_(.+)%_(.+)")
+
 	recipe.type = recipe.type or "recipe"
 	--if not recipe.name then [TODO: insert error here] end
 
-	if get_quality_color(recipe.qrc) then
-		recipe.localised_name = {"", "[color="..get_quality_color(recipe.qrc).."]", {"item-name."..recipe.results[1].name}, " (", {"quality-name."..recipe.qrc}, ")[/color]"}
-	end
+	recipe.localised_name = {"", "[color="..get_quality_color(target_quality).."]", {"?", {"recipe-name."..recipe_name}, {"item-name."..recipe_name}, {"entity-name."..recipe_name}}, " (", {"quality-name."..target_quality}, ")[/color]"}
 
 	--Add a temp item for every quality output
 	for _, product in ipairs(recipe.results) do
@@ -73,7 +73,10 @@ function qrc.edit_quality_recipe(recipe)
 
 	recipe.result_is_always_fresh = true
 	recipe.preserve_products_in_machine_output = true
-	recipe.hidden = true
+	recipe.hidden_in_factoriopedia = true
+	recipe.hide_from_stats = true
+	recipe.hide_from_player_crafting = true
+	recipe.hide_from_signal_gui = true
 end
 
 return qrc
