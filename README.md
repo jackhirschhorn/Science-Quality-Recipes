@@ -14,7 +14,7 @@ name = "qrc_legendary_fast-inserter",
 Output items now support quality tag.\
 Example:
 ```lua
-{type = "item", name = [item-name], quality = [quality]}
+{type = "item", name = "fast-inserter", quality = "legendary", amount = 1}
 ```
 
 # Example
