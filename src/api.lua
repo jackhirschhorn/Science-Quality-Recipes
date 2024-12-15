@@ -22,6 +22,26 @@ local function make_icon(item, target_quality)
 	item.localised_name = {"", "[color="..get_quality_color(target_quality).."]", {"?", {"item-name."..item.name}, {"entity-name."..item.name}}, " (", {"quality-name."..target_quality}, ")[/color]"}
 end
 
+local function get_subgroup(item)
+	local qrc_subgroup = "qrc-"..item.subgroup
+
+	--create a subgroup if one doesn't exist
+	if not data.raw["item-subgroup"]["qrc-"..qrc_subgroup] then
+		local item_subgroup = data.raw["item-subgroup"][item.subgroup]
+		local item_group = data.raw["item-group"][item_subgroup.group]
+		data:extend({
+			{
+				type = "item-subgroup",
+				name = qrc_subgroup,
+				group = "qrc-item-group",
+				order = item_group.order.."-"..item_subgroup.order
+			}
+		})
+	end
+
+	return qrc_subgroup
+end
+
 local function setup_item(item_name, target_quality)
 	if data.raw.item["qrc-"..target_quality.."-"..item_name] then return end
 
@@ -50,6 +70,8 @@ local function setup_item(item_name, target_quality)
 	  }
 	}
 	item.name = "qrc-"..target_quality.."-"..item_name
+	item.subgroup = get_subgroup(item)
+	item.order = item.order.."-"..data.raw["quality"][target_quality].level
 
 	data:extend({item})
 	return item.name
@@ -59,7 +81,6 @@ function qrc.edit_quality_recipe(recipe)
 	local _, target_quality, recipe_name = recipe.name:match("(.+)%_(.+)%_(.+)")
 
 	recipe.type = recipe.type or "recipe"
-	--if not recipe.name then [TODO: insert error here] end
 
 	recipe.localised_name = {"", "[color="..get_quality_color(target_quality).."]", {"?", {"recipe-name."..recipe_name}, {"item-name."..recipe_name}, {"entity-name."..recipe_name}}, " (", {"quality-name."..target_quality}, ")[/color]"}
 
@@ -69,6 +90,10 @@ function qrc.edit_quality_recipe(recipe)
 			product.name = setup_item(product.name, product.quality)
 			product.quality = nil
 		end
+	end
+
+	if recipe.subgroup then
+		recipe.subgroup = get_subgroup(recipe)
 	end
 
 	recipe.result_is_always_fresh = true

@@ -1,5 +1,15 @@
+data:extend({
+	{
+		type = "item-group",
+		name = "qrc-item-group",
+		order = "x",
+		icon = "__quality__/graphics/technology/legendary-quality.png",
+		icon_size = 256,
+	}
+})
+
 if settings.startup["qrc-enable-examples"].value then
-	data.extend({
+	data:extend({
 		{
 			type = "recipe",
 			name = "qrc_epic_iron-gear-wheel",

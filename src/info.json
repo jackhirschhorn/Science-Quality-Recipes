@@ -1,13 +1,15 @@
 {
   "name": "quality-recipes-core",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "factorio_version": "2.0",
   "title": "Quality Recipes Core",
   "author": "AzzyBunn",
   "contact": "",
   "homepage": "",
   "description": "Overhauls quality mechanic to allow creation of recipes for quality items.",
+  "quality_required": true,
   "dependencies": [
-    "base >= 2.0.22"
+    "base >= 2.0.22",
+    "quality >= 2.0.22"
   ]
 }

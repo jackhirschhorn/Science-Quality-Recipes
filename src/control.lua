@@ -88,6 +88,7 @@ script.on_event("on_tick", function()
 		if player then
 			if player.opened then
 				local entity = player.opened
+				if not entity then return end
 				if entity.type == "assembling-machine" or (entity.type == "entity-ghost" and entity.ghost_type == "assembling-machine") then
 					check_machine_quality(entity)
 				end
