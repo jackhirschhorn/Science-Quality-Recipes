@@ -8,7 +8,7 @@ end
 
 local function make_icon(item, target_quality)
 	local quality = data.raw.quality[target_quality]
-
+	if not item then return end
 	if item.icons then
 		item.icons.insert({ icon = quality.icon, icon_size = item.icon_size, scale = 0.25, shift = { -10, 10 } })
 	else
@@ -20,6 +20,21 @@ local function make_icon(item, target_quality)
 	end
 
 	item.localised_name = {"", "[color="..get_quality_color(target_quality).."]", {"?", {"item-name."..item.name}, {"entity-name."..item.name}}, " (", {"quality-name."..target_quality}, ")[/color]"}
+end
+
+local function make_icon2(item, target_quality, item_name, sa)
+	local quality = data.raw.quality[target_quality]
+	if not item then return end	
+
+	item.icons = {
+			{ icon = "__"..(sa and "space-age" or "base").."__/graphics/icons/"..item_name..".png", icon_size = item.icon_size },
+			
+			{ icon = quality.icon, icon_size = quality.icon_size, scale = 0.25, shift = { -10, 10 }  }
+	}
+	
+	item.icon = nil
+
+	item.localised_name = {"", "[color="..get_quality_color(target_quality).."]", {"?", {"item-name."..item_name}, {"entity-name."..item_name}}, " (", {"quality-name."..target_quality}, ")[/color]"}
 end
 
 local function get_subgroup(item)
@@ -42,12 +57,22 @@ local function get_subgroup(item)
 	return qrc_subgroup
 end
 
-local function setup_item(item_name, target_quality)
+local function setup_item(item_name, target_quality, sa)
 	if data.raw.item["qrc-"..target_quality.."-"..item_name] then return end
 
 	local item = table.deepcopy(data.raw.item[item_name])
 
-	make_icon(item, target_quality)
+	if not item then 
+
+		item = table.deepcopy(data.raw.item["lab"]) 
+
+		make_icon2(item, target_quality,item_name, sa)
+
+	else
+
+		make_icon(item, target_quality)
+	
+	end
 
 	item.localised_description = {"qrc.temp-description", item.name, target_quality}
 	item.hidden_in_factoriopedia = true
@@ -87,7 +112,7 @@ function qrc.edit_quality_recipe(recipe)
 	--Add a temp item for every quality output
 	for _, product in ipairs(recipe.results) do
 		if product.type == "item" and product.quality then
-			product.name = setup_item(product.name, product.quality)
+			product.name = setup_item(product.name, product.quality, recipe.sa)
 			product.quality = nil
 		end
 	end
