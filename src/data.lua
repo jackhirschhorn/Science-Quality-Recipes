@@ -5,41 +5,11 @@ data:extend({
 		order = "x",
 		icon = "__quality__/graphics/technology/legendary-quality.png",
 		icon_size = 256,
-	}
-})
-
-
-if settings.startup["qrc-enable-examples"].value then
-	data:extend({	
-		{
-			type = "recipe",
-			name = "qrc_epic_iron-gear-wheel",
-			energy_required = 1,
-			ingredients = {
-				{type = "item", name = "steel-plate", amount = 8}
-			},
-			results = {
-				{type = "item", name = "iron-gear-wheel", quality = "epic", amount = 1}
-			}
-		},
-		{
-			type = "recipe",
-			name = "qrc_uncommon_fast-inserter",
-			energy_required = 1,
-			enabled = false,
-			ingredients = {
-				{type = "item", name = "automation-science-pack", amount = 2},
-				{type = "item", name = "advanced-circuit", amount = 1},
-				{type = "item", name = "inserter", amount = 1},
-			},
-			results = {
-				{type = "item", name = "fast-inserter", quality = "uncommon", amount = 1}
-			}
-		},
+	},
 		{
 			type = "recipe",
 			name = "qrc_uncommon_automation-science-pack",
-			energy_required = 1,
+			energy_required = 5,
 			enabled = false,
 			ingredients = {
 				{type = "item", name = "copper-plate", amount = 1},
@@ -53,7 +23,7 @@ if settings.startup["qrc-enable-examples"].value then
 		{
 			type = "recipe",
 			name = "qrc_rare_automation-science-pack",
-			energy_required = 1,
+			energy_required = 5,
 			enabled = false,
 			ingredients = {
 				{type = "item", name = "copper-plate", amount = 1},
@@ -68,7 +38,7 @@ if settings.startup["qrc-enable-examples"].value then
 		{
 			type = "recipe",
 			name = "qrc_epic_automation-science-pack",
-			energy_required = 1,
+			energy_required = 5,
 			enabled = false,
 			ingredients = {
 				{type = "item", name = "copper-plate", amount = 1},
@@ -84,7 +54,7 @@ if settings.startup["qrc-enable-examples"].value then
 		{
 			type = "recipe",
 			name = "qrc_legendary_automation-science-pack",
-			energy_required = 1,
+			energy_required = 5,
 			enabled = false,
 			ingredients = {
 				{type = "item", name = "copper-plate", amount = 1},
@@ -1149,6 +1119,36 @@ if settings.startup["qrc-enable-examples"].value then
 			  count = 1,
 			  ingredients = {{"automation-science-pack", 1}},
 			  time = 10
+			}
+		}
+})
+
+
+if settings.startup["qrc-enable-examples"].value then
+	data:extend({	
+		{
+			type = "recipe",
+			name = "qrc_epic_iron-gear-wheel",
+			energy_required = 1,
+			ingredients = {
+				{type = "item", name = "steel-plate", amount = 8}
+			},
+			results = {
+				{type = "item", name = "iron-gear-wheel", quality = "epic", amount = 1}
+			}
+		},
+		{
+			type = "recipe",
+			name = "qrc_uncommon_fast-inserter",
+			energy_required = 1,
+			enabled = false,
+			ingredients = {
+				{type = "item", name = "automation-science-pack", amount = 2},
+				{type = "item", name = "advanced-circuit", amount = 1},
+				{type = "item", name = "inserter", amount = 1},
+			},
+			results = {
+				{type = "item", name = "fast-inserter", quality = "uncommon", amount = 1}
 			}
 		}
 	})
