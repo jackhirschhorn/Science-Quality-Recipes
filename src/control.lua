@@ -84,17 +84,18 @@ local function on_entity_added(event)
 end
 
 script.on_event("on_tick", function()
-	for _, player in pairs(game.players) do
-		if player then
-			if player.opened then
-				local entity = player.opened
-				if not entity then return end
-				if entity.type == "assembling-machine" or (entity.type == "entity-ghost" and entity.ghost_type == "assembling-machine") then
-					check_machine_quality(entity)
-				end
-			end
-		end
-	end
+	--for _, player in pairs(game.players) do
+	--	if player then
+	--		if player.opened then
+	--			local entity = player.opened
+	--			if not entity then return end
+	--			if entity.prototype == LuaEquipmentGridPrototype then return end
+	--			if entity.type == "assembling-machine" or (entity.type == "entity-ghost" and entity.ghost_type == "assembling-machine") then
+	--				check_machine_quality(entity)
+	--			end
+	--		end
+	--	end
+	--end
 end)
 
 script.on_event("on_built_entity", on_entity_added)
